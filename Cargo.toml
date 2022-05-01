@@ -1,8 +1,34 @@
 [package]
 name = "picorust"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
 authors = ["Folke Behrens <folke@gmail.com>"]
 description = "Raspberry Pi Pico experiments with Rust"
+license = "Apache-2.0"
+repository = "https://github.com/cloneable/picorust"
 
 [dependencies]
+cortex-m = "0.7.4"
+cortex-m-rt = "0.7.1"
+embedded-hal = "0.2.7"
+embedded-time = "0.12.1"
+rp-pico = "0.3.0"
+
+[profile.release]
+codegen-units = 1
+debug = false
+debug-assertions = false
+incremental = false
+lto = true
+opt-level = 3
+overflow-checks = false
+strip = true
+panic = "abort"
+
+[profile.release.build-override]
+codegen-units = 64
+debug = false
+debug-assertions = false
+incremental = true
+opt-level = 0
+overflow-checks = false
