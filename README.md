@@ -1,2 +1,3 @@
 # picorust
-Raspberry Pi Pico
+
+Raspberry Pi Pico experiments with Rust.

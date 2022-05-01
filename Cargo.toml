@@ -1,0 +1,8 @@
+[package]
+name = "picorust"
+version = "0.1.0"
+edition = "2021"
+authors = ["Folke Behrens <folke@gmail.com>"]
+description = "Raspberry Pi Pico experiments with Rust"
+
+[dependencies]

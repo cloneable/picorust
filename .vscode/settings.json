@@ -1,0 +1,10 @@
+{
+    "rust-analyzer.cargo.target": "thumbv6m-none-eabi",
+    "rust-analyzer.checkOnSave.allTargets": false,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "target/": true
+    }
+}
