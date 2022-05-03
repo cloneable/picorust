@@ -7,6 +7,7 @@ Raspberry Pi Pico experiments with Rust.
 ```
 sudo apt install build-essential gdb libusb-1.0.0-dev libudev-dev
 
+rustup component add llvm-tools-preview
 rustup target add thumbv6m-none-eabi
 
 cargo install cargo-binutils rustfilt elf2uf2-rs probe-run flip-link
