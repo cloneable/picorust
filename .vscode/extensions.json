@@ -1,7 +1,7 @@
 {
     "recommendations": [
         "matklad.rust-analyzer",
-        "bungcip.better-toml",
-        "serayuzgur.crates"
+        "serayuzgur.crates",
+        "tamasfe.even-better-toml"
     ]
 }
