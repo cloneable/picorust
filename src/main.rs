@@ -5,6 +5,7 @@ use cortex_m_rt::entry;
 use embedded_hal::digital::v2::OutputPin;
 use embedded_time::fixed_point::FixedPoint;
 use rp_pico::hal::clocks::Clock;
+use rp_pico::hal::gpio::{Pin, PinId, PushPullOutput};
 
 #[entry]
 fn main() -> ! {
@@ -24,7 +25,7 @@ fn main() -> ! {
     .ok()
     .unwrap();
 
-    let mut delay = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().integer());
+    let delay = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().integer());
 
     let sio = rp_pico::hal::sio::Sio::new(pac.SIO);
     let pins = rp_pico::Pins::new(
@@ -34,16 +35,38 @@ fn main() -> ! {
         &mut pac.RESETS,
     );
 
-    let mut led_board = pins.led.into_push_pull_output();
-    let mut led_ext = pins.gpio28.into_push_pull_output();
+    let led_board = pins.led.into_push_pull_output();
+    // let led_ext = pins.gpio28.into_push_pull_output();
+
+    runloop(led_board, delay)
+}
+
+#[inline(never)]
+fn runloop<I: PinId>(mut led: Pin<I, PushPullOutput>, mut delay: cortex_m::delay::Delay) -> ! {
+    let morse_unit = 120;
 
     loop {
-        led_board.set_high().unwrap();
-        led_ext.set_low().unwrap();
-        delay.delay_ms(500);
-        led_board.set_low().unwrap();
-        led_ext.set_high().unwrap();
-        delay.delay_ms(500);
+        for _ in 1..=3 {
+            led.set_high().unwrap();
+            delay.delay_ms(1 * morse_unit);
+            led.set_low().unwrap();
+            delay.delay_ms(1 * morse_unit);
+        }
+        delay.delay_ms(2 * morse_unit);
+        for _ in 1..=3 {
+            led.set_high().unwrap();
+            delay.delay_ms(3 * morse_unit);
+            led.set_low().unwrap();
+            delay.delay_ms(1 * morse_unit);
+        }
+        delay.delay_ms(2 * morse_unit);
+        for _ in 1..=3 {
+            led.set_high().unwrap();
+            delay.delay_ms(1 * morse_unit);
+            led.set_low().unwrap();
+            delay.delay_ms(1 * morse_unit);
+        }
+        delay.delay_ms(6 * morse_unit);
     }
 }
 
