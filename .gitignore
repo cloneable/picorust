@@ -1,11 +1,13 @@
 .*
 !/.*ignore
 
+# IDE
 !/.vscode/
 /.vscode/*
 !/.vscode/settings.json
 !/.vscode/extensions.json
 
-# Cargo
+# Rust
+!/.rustfmt.toml
 !/.cargo/
 /target/
