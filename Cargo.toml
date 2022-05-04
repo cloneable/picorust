@@ -10,8 +10,11 @@ repository = "https://github.com/cloneable/picorust"
 [dependencies]
 cortex-m = "0.7.4"
 cortex-m-rt = "0.7.1"
+defmt = "0.3.1"
+defmt-rtt = "0.3.2"
 embedded-hal = "0.2.7"
 embedded-time = "0.12.1"
+panic-probe = { version = "0.3.0", features = ["print-defmt"] }
 rp-pico = "0.3.0"
 
 [profile.release]
@@ -23,9 +26,25 @@ lto = true
 opt-level = 3
 overflow-checks = false
 strip = true
-panic = "abort"
+
+[profile.dev]
+codegen-units = 1
+debug = 2
+debug-assertions = true
+incremental = false
+opt-level = 3
+overflow-checks = true
+strip = false
 
 [profile.release.build-override]
+codegen-units = 64
+debug = false
+debug-assertions = false
+incremental = true
+opt-level = 0
+overflow-checks = false
+
+[profile.dev.build-override]
 codegen-units = 64
 debug = false
 debug-assertions = false

@@ -10,8 +10,14 @@ rustflags = [
     "-C",
     "link-arg=-Tlink.x",
     "-C",
+    "link-arg=-Tdefmt.x",
+    "-C",
     "inline-threshold=5",
     "-C",
     "no-vectorize-loops",
 ]
-runner = "elf2uf2-rs -d"
+# runner = "elf2uf2-rs -d"
+runner = "./scripts/flash.sh"
+
+[env]
+DEFMT_LOG = "debug"

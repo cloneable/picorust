@@ -2,13 +2,18 @@
 #![no_main]
 
 use cortex_m_rt::entry;
+use defmt::info;
+use defmt_rtt as _;
 use embedded_hal::digital::v2::OutputPin;
 use embedded_time::fixed_point::FixedPoint;
+use panic_probe as _;
 use rp_pico::hal::clocks::Clock;
 use rp_pico::hal::gpio::{Pin, PinId, PushPullOutput};
 
 #[entry]
 fn main() -> ! {
+    info!("main start");
+
     let mut pac = rp_pico::hal::pac::Peripherals::take().unwrap();
     let core = rp_pico::hal::pac::CorePeripherals::take().unwrap();
     let mut watchdog = rp_pico::hal::watchdog::Watchdog::new(pac.WATCHDOG);
@@ -43,9 +48,12 @@ fn main() -> ! {
 
 #[inline(never)]
 fn runloop<I: PinId>(mut led: Pin<I, PushPullOutput>, mut delay: cortex_m::delay::Delay) -> ! {
+    info!("runloop start");
+
     let morse_unit = 120;
 
     loop {
+        info!("morse: S");
         for _ in 1..=3 {
             led.set_high().unwrap();
             delay.delay_ms(1 * morse_unit);
@@ -53,6 +61,7 @@ fn runloop<I: PinId>(mut led: Pin<I, PushPullOutput>, mut delay: cortex_m::delay
             delay.delay_ms(1 * morse_unit);
         }
         delay.delay_ms(2 * morse_unit);
+        info!("morse: O");
         for _ in 1..=3 {
             led.set_high().unwrap();
             delay.delay_ms(3 * morse_unit);
@@ -60,6 +69,7 @@ fn runloop<I: PinId>(mut led: Pin<I, PushPullOutput>, mut delay: cortex_m::delay
             delay.delay_ms(1 * morse_unit);
         }
         delay.delay_ms(2 * morse_unit);
+        info!("morse: S");
         for _ in 1..=3 {
             led.set_high().unwrap();
             delay.delay_ms(1 * morse_unit);
@@ -68,9 +78,4 @@ fn runloop<I: PinId>(mut led: Pin<I, PushPullOutput>, mut delay: cortex_m::delay
         }
         delay.delay_ms(6 * morse_unit);
     }
-}
-
-#[panic_handler]
-fn panic(_: &core::panic::PanicInfo) -> ! {
-    loop {}
 }
