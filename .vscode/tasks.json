@@ -3,10 +3,16 @@
     "tasks": [
         {
             "label": "cargo build",
-            "type": "shell",
+            "type": "process",
             "command": "cargo",
             "args": ["build"],
             "group": "build"
+        },
+        {
+            "label": "kill openocd",
+            "type": "shell",
+            "command": "killall -w openocd || exit 0",
+            "group": "build",
         }
     ]
 }

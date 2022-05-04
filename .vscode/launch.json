@@ -14,14 +14,22 @@
                 "interface/raspberrypi-swd.cfg",
                 "target/rp2040.cfg"
             ],
-            "gdbPath" : "gdb-multiarch",
+            "gdbPath" : "gdb",
+            // TODO: pass $PICO_SDK_PATH to VSCode.
             // "svdFile": "${env:PICO_SDK_PATH}/src/rp2040/hardware_regs/rp2040.svd",
             "runToEntryPoint": "main",
             "preLaunchCommands": [
                 "monitor init",
                 "monitor reset init",
                 "monitor halt",
-            ]
+            ],
+            "postLaunchCommands": [
+                // TODO: auto update of RTT control block.
+                "monitor rtt setup 0x2003fbc0 0x30 \"SEGGER RTT\"",
+                "monitor rtt start",
+                "monitor rtt server start 4444 0",
+            ],
+            "postDebugTask": "kill openocd"
         }
     ]
 }
