@@ -21,8 +21,6 @@ reboot
 
 ## Debug
 
-> TODO: VSCode debug
-
 ```
 cargo run
 gdb-multiarch target/thumbv6m-none-eabi/debug/picorust
@@ -30,4 +28,6 @@ gdb-multiarch target/thumbv6m-none-eabi/debug/picorust
 ./scripts/gdb-listen.sh
 gdb> target extended-remote localhost:3333
 gdb> load
+
+minicom -b 115200 -D /dev/serial0
 ```

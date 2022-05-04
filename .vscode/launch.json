@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Pico Debug",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceFolder}/target/thumbv6m-none-eabi/debug/picorust",
+            "request": "launch",
+            "type": "cortex-debug",
+            "preLaunchTask": "cargo build",
+            "servertype": "openocd",
+            "device": "RP2040",
+            "configFiles": [
+                "interface/raspberrypi-swd.cfg",
+                "target/rp2040.cfg"
+            ],
+            "gdbPath" : "gdb-multiarch",
+            // "svdFile": "${env:PICO_SDK_PATH}/src/rp2040/hardware_regs/rp2040.svd",
+            "runToEntryPoint": "main",
+            "preLaunchCommands": [
+                "monitor init",
+                "monitor reset init",
+                "monitor halt",
+            ]
+        }
+    ]
+}
